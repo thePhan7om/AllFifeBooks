@@ -1,5 +1,7 @@
 package com.starsoftware.allfifebooks.commands;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Jordan
@@ -8,5 +10,6 @@ package com.starsoftware.allfifebooks.commands;
  * To change this template use File | Settings | File Templates.
  */
 public interface Command {
-    public boolean executeCommand();
+    public List<UserPrompts> executeCommand();
+    boolean validatePrompt(UserPrompts userPrompt);
 }

@@ -32,8 +32,7 @@ public class AddBookCommand implements Command {
 
     @Override
     public boolean validatePrompt(UserPrompts userPrompt) {
-               bookController.validate(userPrompt);
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return  bookController.validate(userPrompt);
     }
 
     private List<UserPrompts> createPrompts() {

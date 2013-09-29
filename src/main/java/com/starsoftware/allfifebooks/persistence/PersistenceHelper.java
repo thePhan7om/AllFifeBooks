@@ -34,11 +34,11 @@ public class PersistenceHelper {
         while (input.hasNext()) {
             String bookEntry = input.nextLine();
             Book loadedBook = populateBook(bookEntry);
-            bookMap.put(loadedBook.getBookId(), loadedBook);
+            bookMap.put(loadedBook.getBookId().toUpperCase(), loadedBook);
         }
 
 
-        return null;
+        return bookMap;
 
     }
 
@@ -55,10 +55,10 @@ public class PersistenceHelper {
                 (bookEntryArray[3].trim().toUpperCase().equals(BookStatuses.REFURBISHED.getStatus()))) {
 
             Book newOrRefurbBook = new Book();
-            newOrRefurbBook.setBookId(bookEntryArray[0]);
-            newOrRefurbBook.setAuthor(bookEntryArray[1]);
-            newOrRefurbBook.setTitle(bookEntryArray[2]);
-            newOrRefurbBook.setStatus(bookEntryArray[3]);
+            newOrRefurbBook.setBookId(bookEntryArray[0].trim());
+            newOrRefurbBook.setAuthor(bookEntryArray[1].trim());
+            newOrRefurbBook.setTitle(bookEntryArray[2].trim());
+            newOrRefurbBook.setStatus(bookEntryArray[3].trim());
             return newOrRefurbBook;
 
 

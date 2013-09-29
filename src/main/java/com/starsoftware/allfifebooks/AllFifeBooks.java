@@ -42,10 +42,29 @@ public class AllFifeBooks {
 
     private void askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {
         for (UserPrompts userPrompt : userPrompts) {
-             userPrompt.setValue(questionAsker.ask(userPrompt.getMessage()));
-            if(userPrompt.getRequiresValidation()){
-              boolean validResponse =  selectedCommand.validatePrompt(userPrompt);
+            askUserPrompt(selectedCommand, questionAsker, userPrompt);
+        }
+    }
 
+    private void askUserPrompt(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
+        userPrompt.setValue(questionAsker.ask(userPrompt.getMessage()));
+        validateInput(selectedCommand, questionAsker, userPrompt);
+    }
+
+    private void validateInput(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
+        if (userPrompt.getValue().trim().length()==0){
+            System.out.println("Sorry you must enter a value. Please try again");
+            askUserPrompt(selectedCommand,questionAsker,userPrompt);
+        }
+        if(userPrompt.getRequiresValidation()){
+          boolean validResponse =  selectedCommand.validatePrompt(userPrompt);
+              if((!validResponse)&&(userPrompt.getMessage().contains("Book ID")) ){
+                  System.out.println("Sorry That Book ID is already In use. Please try again");
+                  askUserPrompt(selectedCommand,questionAsker,userPrompt);
+              }
+            else if((!validResponse)&&(userPrompt.getMessage().contains("Refurbished")) ){
+                System.out.println("Sorry That is Invalid only 'N' or 'R' are excepted. Please try again");
+                askUserPrompt(selectedCommand,questionAsker,userPrompt);
             }
         }
     }

@@ -2,7 +2,6 @@ package com.starsoftware.allfifebooks.books;
 
 import com.starsoftware.allfifebooks.commands.UserPrompts;
 import com.starsoftware.allfifebooks.persistence.PersistenceHelper;
-import org.apache.log4j.helpers.LogLog;
 
 import java.util.Map;
 
@@ -23,7 +22,9 @@ public class BookController {
 
     }
 
-    public boolean validate(UserPrompts userPrompt) {
+    public boolean validateID(UserPrompts userPrompt) {
         return !bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
+
+
 }

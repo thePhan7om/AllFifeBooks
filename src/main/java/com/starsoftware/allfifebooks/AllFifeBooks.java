@@ -3,6 +3,7 @@ package com.starsoftware.allfifebooks;
 
 import com.starsoftware.allfifebooks.commands.AddBookCommand;
 import com.starsoftware.allfifebooks.commands.Command;
+import com.starsoftware.allfifebooks.commands.UserPromptFields;
 import com.starsoftware.allfifebooks.commands.UserPrompts;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -52,19 +53,18 @@ public class AllFifeBooks {
     }
 
     private void validateInput(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
-        if (userPrompt.getValue().trim().length()==0){
+        if (userPrompt.getValue().trim().length() <= 1) {
             System.out.println("Sorry you must enter a value. Please try again");
-            askUserPrompt(selectedCommand,questionAsker,userPrompt);
+            askUserPrompt(selectedCommand, questionAsker, userPrompt);
         }
-        if(userPrompt.getRequiresValidation()){
-          boolean validResponse =  selectedCommand.validatePrompt(userPrompt);
-              if((!validResponse)&&(userPrompt.getMessage().contains("Book ID")) ){
-                  System.out.println("Sorry That Book ID is already In use. Please try again");
-                  askUserPrompt(selectedCommand,questionAsker,userPrompt);
-              }
-            else if((!validResponse)&&(userPrompt.getMessage().contains("Refurbished")) ){
-                System.out.println("Sorry That is Invalid only 'N' or 'R' are excepted. Please try again");
-                askUserPrompt(selectedCommand,questionAsker,userPrompt);
+        if (userPrompt.getRequiresValidation()) {
+            boolean validResponse = selectedCommand.validatePrompt(userPrompt);
+            if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField()))) {
+                System.out.println("Sorry That Book ID is already In use. Please try again");
+                askUserPrompt(selectedCommand, questionAsker, userPrompt);
+            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.STATUS.getField()))) {
+                System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
+                askUserPrompt(selectedCommand, questionAsker, userPrompt);
             }
         }
     }

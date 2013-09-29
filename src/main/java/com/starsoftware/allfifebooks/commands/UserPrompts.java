@@ -9,12 +9,15 @@ package com.starsoftware.allfifebooks.commands;
  */
 public class UserPrompts {
     private String message;
+
+
+    private String field;
     private String value;
     private Boolean requiresValidation;
 
-    public UserPrompts(String message, String value, boolean requiresValidation) {
+    public UserPrompts(String message, String field, boolean requiresValidation) {
         this.message = message;
-        this.value = value;
+        this.field = field;
         this.requiresValidation = requiresValidation;
     }
 
@@ -40,6 +43,14 @@ public class UserPrompts {
 
     public void setRequiresValidation(Boolean requiresValidation) {
         this.requiresValidation = requiresValidation;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
     }
 
 

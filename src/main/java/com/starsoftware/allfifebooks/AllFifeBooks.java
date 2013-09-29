@@ -20,7 +20,7 @@ public class AllFifeBooks {
 
     }
 
-    public String runApplication(QuestionAsker questionAsker) {
+    public void runApplication(QuestionAsker questionAsker) {
         System.out.println("Welcome to All Fife Books, Please select an option:");
         String optionSelection = questionAsker.ask(" Press 1 to add a new book \n Press 2 to sell a book" +
                 "\n Press 3 to bin a book \n Press 4 to refurbish a book" +
@@ -30,26 +30,25 @@ public class AllFifeBooks {
             log.debug("Add Book Selected");
             Command addCommand = new AddBookCommand();
             List<UserPrompts> userPrompts = addCommand.executeCommand();
-            askUserPrompts(userPrompts, addCommand, questionAsker);
-
+            userPrompts = askUserPrompts(userPrompts, addCommand, questionAsker);
+            addCommand.save(userPrompts);
         } else {
             log.debug("Not Implemented Yet");
         }
         System.out.println("Selection" + optionSelection);
-
-
-        return "Hello";
     }
 
-    private void askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {
+    private List<UserPrompts> askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {
         for (UserPrompts userPrompt : userPrompts) {
-            askUserPrompt(selectedCommand, questionAsker, userPrompt);
+            userPrompt = askUserPrompt(selectedCommand, questionAsker, userPrompt);
         }
+        return userPrompts;
     }
 
-    private void askUserPrompt(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
+    private UserPrompts askUserPrompt(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
         userPrompt.setValue(questionAsker.ask(userPrompt.getMessage()));
         validateInput(selectedCommand, questionAsker, userPrompt);
+        return userPrompt;
     }
 
     private void validateInput(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {

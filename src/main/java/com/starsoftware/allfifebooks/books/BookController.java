@@ -1,8 +1,11 @@
 package com.starsoftware.allfifebooks.books;
 
+import com.starsoftware.allfifebooks.commands.Commands;
+import com.starsoftware.allfifebooks.commands.UserPromptFields;
 import com.starsoftware.allfifebooks.commands.UserPrompts;
 import com.starsoftware.allfifebooks.persistence.PersistenceHelper;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,4 +30,30 @@ public class BookController {
     }
 
 
+    public boolean save(List<UserPrompts> userPrompts, Commands command) {
+        Book savedBook;
+        if (command.equals(Commands.ADD)) {
+            savedBook = new Book();
+            for (UserPrompts userPrompt : userPrompts) {
+                setStandardBookFields(savedBook, userPrompt);
+            }
+            return helper.saveBook(savedBook);
+
+        }
+        return false;
+    }
+
+    private void setStandardBookFields(Book savedBook, UserPrompts userPrompt) {
+        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField())) {
+            savedBook.setBookId(userPrompt.getValue().trim());
+        } else if (userPrompt.getField().equals(UserPromptFields.STATUS.getField())) {
+            savedBook.setStatus(userPrompt.getValue().trim());
+        } else if (userPrompt.getField().equals(UserPromptFields.AUTHOR.getField())) {
+            savedBook.setAuthor(userPrompt.getValue().trim());
+
+        } else if (userPrompt.getField().equals(UserPromptFields.TITLE.getField())) {
+            savedBook.setTitle(userPrompt.getValue().trim());
+
+        }
+    }
 }

@@ -4,7 +4,7 @@ import com.starsoftware.allfifebooks.books.Book;
 import com.starsoftware.allfifebooks.books.BookStatuses;
 import org.apache.log4j.Logger;
 
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,6 +19,22 @@ import java.util.Scanner;
 public class PersistenceHelper {
     private final static String DELMITER_STRING = "@@@--@@@";
     private static final Logger log = Logger.getLogger(PersistenceHelper.class);
+    private final static String FILE_NAME = "inventory/allbooks.txt";
+
+    public boolean saveBook(Book savedBook) {
+
+        try {
+            Writer output = new BufferedWriter(new FileWriter(FILE_NAME, true));
+            output.append(savedBook.getBookId() + DELMITER_STRING + savedBook.getAuthor() + DELMITER_STRING + savedBook.getTitle() + DELMITER_STRING + savedBook.getStatus());
+            output.close();
+            return true;
+
+        } catch (IOException e) {
+            log.error("Book File not found");
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public Map loadBookList() {
         Map<String, Book> bookMap = new HashMap<String, Book>();
@@ -62,9 +78,8 @@ public class PersistenceHelper {
             return newOrRefurbBook;
 
 
-        }
-        else{
-            log.debug("BookEntry3 "+bookEntryArray[3]);
+        } else {
+            log.debug("BookEntry3 " + bookEntryArray[3]);
         }
         return null;
     }

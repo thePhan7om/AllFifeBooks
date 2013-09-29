@@ -11,5 +11,9 @@ import java.util.List;
  */
 public interface Command {
     public List<UserPrompts> executeCommand();
+
     boolean validatePrompt(UserPrompts userPrompt);
+
+    void save(List<UserPrompts> userPrompts);
+
 }

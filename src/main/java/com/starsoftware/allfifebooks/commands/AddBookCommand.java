@@ -14,24 +14,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class AddBookCommand implements Command {
-    BookController bookController;
-
     private static final List<String> ACCEPTED_STATUSES = Arrays.asList("NEW", "REFURB");
+    BookController bookController;
 
     @Override
     public List<UserPrompts> executeCommand() {
-     /*
-     Things this needs to do:
-     capture user inputs for:
-     ID, Title Author Status
-    Create new Book Object
-    Create Prompts
-    Create Status Enum
-      */
-
         bookController = new BookController();
         return createPrompts();
-
     }
 
     @Override
@@ -39,13 +28,21 @@ public class AddBookCommand implements Command {
         if (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField())) {
             return bookController.validateID(userPrompt);
         } else if (userPrompt.getField().equals(UserPromptFields.STATUS.getField())) {
-
             System.out.println("Entered field " + userPrompt.getValue().trim().toUpperCase());
             if (ACCEPTED_STATUSES.contains(userPrompt.getValue().trim().toUpperCase())) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void save(List<UserPrompts> userPrompts) {
+        boolean result = bookController.save(userPrompts, Commands.ADD);
+        if (result) {
+            System.out.println("Book Added");
+
+        }
     }
 
     private List<UserPrompts> createPrompts() {

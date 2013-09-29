@@ -13,17 +13,17 @@ import java.util.Scanner;
  */
 public class QuestionAsker {
 
-        private final Scanner scanner;
-        private final PrintStream out;
+    private final Scanner scanner;
+    private final PrintStream out;
 
-        public QuestionAsker(InputStream in, PrintStream out) {
-            scanner = new Scanner(in);
-            this.out = out;
-        }
-
-        public String ask(String message) {
-            out.println(message);
-            return scanner.next();
-        }
+    public QuestionAsker(InputStream in, PrintStream out) {
+        scanner = new Scanner(in);
+        this.out = out;
     }
+
+    public String ask(String message) {
+        out.println(message);
+        return scanner.nextLine();
+    }
+}
 

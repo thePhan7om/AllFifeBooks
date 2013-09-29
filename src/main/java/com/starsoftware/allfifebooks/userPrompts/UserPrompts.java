@@ -1,4 +1,4 @@
-package com.starsoftware.allfifebooks.commands;
+package com.starsoftware.allfifebooks.userPrompts;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,11 +11,11 @@ public class UserPrompts {
     private String message;
 
 
-    private String field;
+    private UserPromptFields field;
     private String value;
     private Boolean requiresValidation;
 
-    public UserPrompts(String message, String field, boolean requiresValidation) {
+    public UserPrompts(String message, UserPromptFields field, boolean requiresValidation) {
         this.message = message;
         this.field = field;
         this.requiresValidation = requiresValidation;
@@ -30,7 +30,7 @@ public class UserPrompts {
     }
 
     public String getValue() {
-        return value;
+        return value.trim();
     }
 
     public void setValue(String value) {
@@ -45,11 +45,11 @@ public class UserPrompts {
         this.requiresValidation = requiresValidation;
     }
 
-    public String getField() {
+    public UserPromptFields getField() {
         return field;
     }
 
-    public void setField(String field) {
+    public void setField(UserPromptFields field) {
         this.field = field;
     }
 

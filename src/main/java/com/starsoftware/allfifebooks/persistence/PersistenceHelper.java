@@ -1,7 +1,7 @@
 package com.starsoftware.allfifebooks.persistence;
 
-import com.starsoftware.allfifebooks.books.Book;
 import com.starsoftware.allfifebooks.books.BookStatuses;
+import com.starsoftware.allfifebooks.books.bookTypes.Book;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -26,6 +26,7 @@ public class PersistenceHelper {
         try {
             Writer output = new BufferedWriter(new FileWriter(FILE_NAME, true));
             output.append(savedBook.getBookId() + DELMITER_STRING + savedBook.getAuthor() + DELMITER_STRING + savedBook.getTitle() + DELMITER_STRING + savedBook.getStatus());
+            output.append("\n");
             output.close();
             return true;
 

@@ -1,4 +1,4 @@
-package com.starsoftware.allfifebooks;
+package com.starsoftware.allfifebooks.userPrompts;
 
 import java.io.InputStream;
 import java.io.PrintStream;

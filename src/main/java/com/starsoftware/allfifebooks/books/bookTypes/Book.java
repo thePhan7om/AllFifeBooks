@@ -1,4 +1,4 @@
-package com.starsoftware.allfifebooks.books;
+package com.starsoftware.allfifebooks.books.bookTypes;
 
 /**
  * Created with IntelliJ IDEA.

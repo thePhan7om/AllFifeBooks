@@ -1,7 +1,7 @@
 package com.starsoftware.allfifebooks;
 
 
-import org.junit.Assert;
+import com.starsoftware.allfifebooks.userPrompts.QuestionAsker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,6 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,15 +26,16 @@ public class AllFifeBooksTest
     QuestionAsker questionAsker;
 
     @Before
-    public void setup(){
+    public void setup() {
         MockitoAnnotations.initMocks(this);
 
     }
+
     @Test
-    public void testApplication(){
-     AllFifeBooks allFifeBooks = new AllFifeBooks();
-     //assertEquals("Hello", allFifeBooks.runApplication(questionAsker));
- }
+    public void testApplication() {
+        AllFifeBooks allFifeBooks = new AllFifeBooks();
+        //assertEquals("Hello", allFifeBooks.runApplication(questionAsker));
+    }
 
     @Test
     public void getsIntegerWhenWithinBoundsOfOneToTen() throws Exception {
@@ -43,7 +43,7 @@ public class AllFifeBooksTest
         when(questionAsker.ask(anyString())).thenReturn("Fred");
         AllFifeBooks allFifeBooks = new AllFifeBooks();
 
-      //  assertEquals("Hello Fred",allFifeBooks.runApplication(questionAsker));
+        //  assertEquals("Hello Fred",allFifeBooks.runApplication(questionAsker));
     }
 
 

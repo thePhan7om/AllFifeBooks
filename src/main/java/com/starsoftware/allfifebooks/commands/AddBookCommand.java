@@ -1,6 +1,8 @@
 package com.starsoftware.allfifebooks.commands;
 
 import com.starsoftware.allfifebooks.books.BookController;
+import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
+import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +27,9 @@ public class AddBookCommand implements Command {
 
     @Override
     public boolean validatePrompt(UserPrompts userPrompt) {
-        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField())) {
+        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
             return bookController.validateID(userPrompt);
-        } else if (userPrompt.getField().equals(UserPromptFields.STATUS.getField())) {
+        } else if (userPrompt.getField().equals(UserPromptFields.STATUS)) {
             System.out.println("Entered field " + userPrompt.getValue().trim().toUpperCase());
             if (ACCEPTED_STATUSES.contains(userPrompt.getValue().trim().toUpperCase())) {
                 return true;
@@ -45,12 +47,17 @@ public class AddBookCommand implements Command {
         }
     }
 
+    @Override
+    public void displayBookListing() {
+        //Not Used here
+    }
+
     private List<UserPrompts> createPrompts() {
         List<UserPrompts> userPrompts = new ArrayList<UserPrompts>();
-        userPrompts.add(new UserPrompts("> Please Enter the Book ID", UserPromptFields.BOOK_ID.getField(), true));
-        userPrompts.add(new UserPrompts("> Please Enter the Book Title", UserPromptFields.TITLE.getField(), false));
-        userPrompts.add(new UserPrompts("> Please Enter the Authors Name", UserPromptFields.AUTHOR.getField(), false));
-        userPrompts.add(new UserPrompts("> Is the Book New Or Refurbished? Please enter 'NEW' or 'REFURB'", UserPromptFields.STATUS.getField(), true));
+        userPrompts.add(new UserPrompts("> Please Enter the Book ID", UserPromptFields.BOOK_ID, true));
+        userPrompts.add(new UserPrompts("> Please Enter the Book Title", UserPromptFields.TITLE, false));
+        userPrompts.add(new UserPrompts("> Please Enter the Authors Name", UserPromptFields.AUTHOR, false));
+        userPrompts.add(new UserPrompts("> Is the Book New Or Refurbished? Please enter 'NEW' or 'REFURB'", UserPromptFields.STATUS, true));
         return userPrompts;
 
     }

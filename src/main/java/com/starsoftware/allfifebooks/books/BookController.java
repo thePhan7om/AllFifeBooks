@@ -1,9 +1,10 @@
 package com.starsoftware.allfifebooks.books;
 
+import com.starsoftware.allfifebooks.books.bookTypes.Book;
 import com.starsoftware.allfifebooks.commands.Commands;
-import com.starsoftware.allfifebooks.commands.UserPromptFields;
-import com.starsoftware.allfifebooks.commands.UserPrompts;
 import com.starsoftware.allfifebooks.persistence.PersistenceHelper;
+import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
+import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 
 import java.util.List;
 import java.util.Map;
@@ -44,16 +45,20 @@ public class BookController {
     }
 
     private void setStandardBookFields(Book savedBook, UserPrompts userPrompt) {
-        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField())) {
-            savedBook.setBookId(userPrompt.getValue().trim());
-        } else if (userPrompt.getField().equals(UserPromptFields.STATUS.getField())) {
-            savedBook.setStatus(userPrompt.getValue().trim());
-        } else if (userPrompt.getField().equals(UserPromptFields.AUTHOR.getField())) {
-            savedBook.setAuthor(userPrompt.getValue().trim());
+        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+            savedBook.setBookId(userPrompt.getValue());
+        } else if (userPrompt.getField().equals(UserPromptFields.STATUS)) {
+            savedBook.setStatus(userPrompt.getValue());
+        } else if (userPrompt.getField().equals(UserPromptFields.AUTHOR)) {
+            savedBook.setAuthor(userPrompt.getValue());
 
-        } else if (userPrompt.getField().equals(UserPromptFields.TITLE.getField())) {
-            savedBook.setTitle(userPrompt.getValue().trim());
+        } else if (userPrompt.getField().equals(UserPromptFields.TITLE)) {
+            savedBook.setTitle(userPrompt.getValue());
 
         }
+    }
+
+    public Map<String, Book> getBookMap() {
+        return bookMap;  //To change body of created methods use File | Settings | File Templates.
     }
 }

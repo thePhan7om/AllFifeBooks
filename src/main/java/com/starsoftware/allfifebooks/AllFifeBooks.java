@@ -3,8 +3,10 @@ package com.starsoftware.allfifebooks;
 
 import com.starsoftware.allfifebooks.commands.AddBookCommand;
 import com.starsoftware.allfifebooks.commands.Command;
-import com.starsoftware.allfifebooks.commands.UserPromptFields;
-import com.starsoftware.allfifebooks.commands.UserPrompts;
+import com.starsoftware.allfifebooks.commands.SellBookCommand;
+import com.starsoftware.allfifebooks.userPrompts.QuestionAsker;
+import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
+import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -32,6 +34,12 @@ public class AllFifeBooks {
             List<UserPrompts> userPrompts = addCommand.executeCommand();
             userPrompts = askUserPrompts(userPrompts, addCommand, questionAsker);
             addCommand.save(userPrompts);
+        } else if (optionSelection.trim().equals("2")) {
+            log.debug("Sell Book Selected");
+            Command sellCommand = new SellBookCommand();
+            List<UserPrompts> userPrompts = sellCommand.executeCommand();
+            userPrompts = askUserPrompts(userPrompts, sellCommand, questionAsker);
+            sellCommand.save(userPrompts);
         } else {
             log.debug("Not Implemented Yet");
         }
@@ -48,20 +56,23 @@ public class AllFifeBooks {
     private UserPrompts askUserPrompt(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
         userPrompt.setValue(questionAsker.ask(userPrompt.getMessage()));
         validateInput(selectedCommand, questionAsker, userPrompt);
+        if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) && (userPrompt.getValue().toUpperCase().equals("YES"))) {
+            selectedCommand.displayBookListing();
+        }
         return userPrompt;
     }
 
     private void validateInput(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
-        if (userPrompt.getValue().trim().length() <= 1) {
+        if (userPrompt.getValue().length() <= 1) {
             System.out.println("Sorry you must enter a value. Please try again");
             askUserPrompt(selectedCommand, questionAsker, userPrompt);
         }
         if (userPrompt.getRequiresValidation()) {
             boolean validResponse = selectedCommand.validatePrompt(userPrompt);
-            if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID.getField()))) {
+            if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
                 System.out.println("Sorry That Book ID is already In use. Please try again");
                 askUserPrompt(selectedCommand, questionAsker, userPrompt);
-            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.STATUS.getField()))) {
+            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.STATUS))) {
                 System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
                 askUserPrompt(selectedCommand, questionAsker, userPrompt);
             }

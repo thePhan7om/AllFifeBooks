@@ -28,7 +28,7 @@ public class AddBookCommand implements Command {
     @Override
     public boolean validatePrompt(UserPrompts userPrompt) {
         if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
-            return bookController.validateID(userPrompt);
+            return !bookController.validateID(userPrompt);
         } else if (userPrompt.getField().equals(UserPromptFields.STATUS)) {
             System.out.println("Entered field " + userPrompt.getValue().trim().toUpperCase());
             if (ACCEPTED_STATUSES.contains(userPrompt.getValue().trim().toUpperCase())) {

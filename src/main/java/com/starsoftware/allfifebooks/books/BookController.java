@@ -1,6 +1,7 @@
 package com.starsoftware.allfifebooks.books;
 
 import com.starsoftware.allfifebooks.books.bookTypes.Book;
+import com.starsoftware.allfifebooks.books.bookTypes.SoldBook;
 import com.starsoftware.allfifebooks.commands.Commands;
 import com.starsoftware.allfifebooks.persistence.PersistenceHelper;
 import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
@@ -27,18 +28,29 @@ public class BookController {
     }
 
     public boolean validateID(UserPrompts userPrompt) {
-        return !bookMap.containsKey(userPrompt.getValue().toUpperCase());
+        return bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
 
 
     public boolean save(List<UserPrompts> userPrompts, Commands command) {
-        Book savedBook;
         if (command.equals(Commands.ADD)) {
-            savedBook = new Book();
+            Book savedBook = new Book();
             for (UserPrompts userPrompt : userPrompts) {
                 setStandardBookFields(savedBook, userPrompt);
             }
             return helper.saveBook(savedBook);
+
+        }
+        if (command.equals(Commands.SELL)) {
+            SoldBook soldBook = new SoldBook();
+            for (UserPrompts userPrompt : userPrompts) {
+                setStandardBookFields(soldBook, userPrompt);
+                if (userPrompt.getField().equals(UserPromptFields.PRICE)) {
+                    soldBook.setSoldPrice(userPrompt.getValue());
+                }
+            }
+            soldBook.setStatus(BookStatuses.SOLD.getStatus());
+            return helper.alterBook(soldBook);
 
         }
         return false;

@@ -49,6 +49,10 @@ public class AllFifeBooks {
     private List<UserPrompts> askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {
         for (UserPrompts userPrompt : userPrompts) {
             userPrompt = askUserPrompt(selectedCommand, questionAsker, userPrompt);
+            if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) && (userPrompt.getValue().toUpperCase().equals("YES"))) {
+                selectedCommand.displayBookListing();
+
+            }
         }
         return userPrompts;
     }
@@ -56,9 +60,6 @@ public class AllFifeBooks {
     private UserPrompts askUserPrompt(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
         userPrompt.setValue(questionAsker.ask(userPrompt.getMessage()));
         validateInput(selectedCommand, questionAsker, userPrompt);
-        if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) && (userPrompt.getValue().toUpperCase().equals("YES"))) {
-            selectedCommand.displayBookListing();
-        }
         return userPrompt;
     }
 
@@ -74,6 +75,9 @@ public class AllFifeBooks {
                 askUserPrompt(selectedCommand, questionAsker, userPrompt);
             } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.STATUS))) {
                 System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
+                askUserPrompt(selectedCommand, questionAsker, userPrompt);
+            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_LISTING))) {
+                System.out.println("Sorry That is Invalid only 'YES' or 'NO' are excepted. Please try again");
                 askUserPrompt(selectedCommand, questionAsker, userPrompt);
             }
         }

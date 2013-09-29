@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SellBookCommand implements Command {
 
-    private static final List<String> ACCEPTED_STATUSES = Arrays.asList("NEW", "REFURB");
+    private static final List<String> YES_NO = Arrays.asList("YES", "NO");
     BookController bookController;
     private final static String DELMITER_STRING = "@@@--@@@";
 
@@ -32,12 +32,24 @@ public class SellBookCommand implements Command {
 
     @Override
     public boolean validatePrompt(UserPrompts userPrompt) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+            return bookController.validateID(userPrompt);
+        } else if (userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) {
+            System.out.println("Entered field " + userPrompt.getValue().trim().toUpperCase());
+            if (YES_NO.contains(userPrompt.getValue().toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void save(List<UserPrompts> userPrompts) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        boolean result = bookController.save(userPrompts, Commands.SELL);
+        if (result) {
+            System.out.println("Book Sold");
+
+        }
     }
 
     @Override

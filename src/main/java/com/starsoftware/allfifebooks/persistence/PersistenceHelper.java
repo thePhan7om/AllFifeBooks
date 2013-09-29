@@ -2,6 +2,7 @@ package com.starsoftware.allfifebooks.persistence;
 
 import com.starsoftware.allfifebooks.books.BookStatuses;
 import com.starsoftware.allfifebooks.books.bookTypes.Book;
+import com.starsoftware.allfifebooks.books.bookTypes.SoldBook;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -35,6 +36,10 @@ public class PersistenceHelper {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean alterBook(SoldBook soldBook) {
+        return true;
     }
 
     public Map loadBookList() {
@@ -84,4 +89,6 @@ public class PersistenceHelper {
         }
         return null;
     }
+
+
 }

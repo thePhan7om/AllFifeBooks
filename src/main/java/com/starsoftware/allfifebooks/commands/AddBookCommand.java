@@ -1,6 +1,5 @@
 package com.starsoftware.allfifebooks.commands;
 
-import com.starsoftware.allfifebooks.books.BookController;
 import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
 import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 
@@ -15,13 +14,11 @@ import java.util.List;
  * Time: 21:50
  * To change this template use File | Settings | File Templates.
  */
-public class AddBookCommand implements Command {
+public class AddBookCommand extends BaseCommand implements Command {
     private static final List<String> ACCEPTED_STATUSES = Arrays.asList("NEW", "REFURB");
-    BookController bookController;
 
     @Override
     public List<UserPrompts> executeCommand() {
-        bookController = new BookController();
         return createPrompts();
     }
 
@@ -45,11 +42,6 @@ public class AddBookCommand implements Command {
             System.out.println("Book Added");
 
         }
-    }
-
-    @Override
-    public void displayBookListing() {
-        //Not Used here
     }
 
     @Override

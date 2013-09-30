@@ -6,13 +6,7 @@ import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 30/09/2013
- * Time: 19:23
- * To change this template use File | Settings | File Templates.
- */
+
 public class BinBookCommand extends BaseCommand implements Command {
 
     @Override

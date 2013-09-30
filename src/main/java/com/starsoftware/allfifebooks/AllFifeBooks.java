@@ -27,19 +27,19 @@ public class AllFifeBooks {
                 "\n Press 5 to view a book report");
         //  open up standard input
         if (optionSelection.trim().equals("1")) {
-            log.debug("Add Book Selected");
+            System.out.println(" ### Add Book ###");
             Command addCommand = new AddBookCommand();
             List<UserPrompts> userPrompts = addCommand.executeCommand();
             userPrompts = askUserPrompts(userPrompts, addCommand, questionAsker);
             addCommand.save(userPrompts);
         } else if (optionSelection.trim().equals("2")) {
-            log.debug("Sell Book Selected");
+            System.out.println(" ### Sell Book ###");
             Command sellCommand = new SellBookCommand();
             List<UserPrompts> userPrompts = sellCommand.executeCommand();
             userPrompts = askUserPrompts(userPrompts, sellCommand, questionAsker);
             sellCommand.save(userPrompts);
         } else if (optionSelection.trim().equals("3")) {
-            log.debug("Bin Book Selected");
+            System.out.println(" ### Bin Book ###");
             Command binCommand = new BinBookCommand();
             List<UserPrompts> userPrompts = binCommand.executeCommand();
             userPrompts = askUserPrompts(userPrompts, binCommand, questionAsker);
@@ -78,10 +78,11 @@ public class AllFifeBooks {
                 if ((selectedCommand.getCommand().equals(Commands.ADD)) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
                     System.out.println("Sorry That Book ID is already In use. Please try again");
                     askUserPrompt(selectedCommand, questionAsker, userPrompt);
-                } else if ((selectedCommand.getCommand().equals(Commands.SELL)) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
+                } else if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
                     System.out.println("Sorry That Book ID is invalid. Please try again");
                     askUserPrompt(selectedCommand, questionAsker, userPrompt);
-                } else if ((userPrompt.getField().equals(UserPromptFields.STATUS))) {
+                }
+                if ((userPrompt.getField().equals(UserPromptFields.STATUS))) {
                     System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
                     askUserPrompt(selectedCommand, questionAsker, userPrompt);
                 } else if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING))) {

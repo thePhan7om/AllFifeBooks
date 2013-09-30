@@ -5,17 +5,15 @@ import com.starsoftware.allfifebooks.books.BookStatuses;
 /**
  * Created with IntelliJ IDEA.
  * User: Jordan
- * Date: 29/09/2013
- * Time: 23:19
+ * Date: 30/09/2013
+ * Time: 19:57
  * To change this template use File | Settings | File Templates.
  */
-public class SoldBook extends Book {
-
-    public SoldBook() {
-
+public class BinnedBook extends Book {
+    public BinnedBook() {
     }
 
-    public SoldBook(Book inStockBook) {
+    public BinnedBook(Book inStockBook) {
         this.setBookId(inStockBook.getBookId());
         this.setAuthor(inStockBook.getAuthor());
         this.setTitle(inStockBook.getTitle());
@@ -24,17 +22,16 @@ public class SoldBook extends Book {
 
     @Override
     public String getStatus() {
-        return BookStatuses.SOLD.getStatus();
+        return BookStatuses.BINNED.getStatus();
     }
 
     @Override
-    public String getSoldPrice() {
-        return super.getSoldPrice();
+    public String getFaultDescription() {
+        return super.getFaultDescription();
     }
 
     @Override
-    public void setSoldPrice(String soldPrice) {
-        super.setSoldPrice(soldPrice);
+    public void setFaultDescription(String faultDescription) {
+        super.setFaultDescription(faultDescription);
     }
-
 }

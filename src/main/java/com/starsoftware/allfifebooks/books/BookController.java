@@ -1,5 +1,6 @@
 package com.starsoftware.allfifebooks.books;
 
+import com.starsoftware.allfifebooks.books.bookTypes.BinnedBook;
 import com.starsoftware.allfifebooks.books.bookTypes.Book;
 import com.starsoftware.allfifebooks.books.bookTypes.SoldBook;
 import com.starsoftware.allfifebooks.commands.Commands;
@@ -43,36 +44,69 @@ public class BookController {
 
     public boolean save(List<UserPrompts> userPrompts, Commands command) {
         if (command.equals(Commands.ADD)) {
-            Book savedBook = new Book();
-            for (UserPrompts userPrompt : userPrompts) {
-                setStandardBookFields(savedBook, userPrompt);
-            }
-            return helper.saveNewBook(savedBook);
+            return addBook(userPrompts);
 
         }
         if (command.equals(Commands.SELL)) {
-            String soldPrice = "";
-            String bookId = "";
-            for (UserPrompts userPrompt : userPrompts) {
-                if (userPrompt.getField().equals(UserPromptFields.PRICE)) {
-                    soldPrice = userPrompt.getValue();
-                } else if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
-                    bookId = userPrompt.getValue();
-                }
-            }
-            Book inStockBook = bookMap.get(bookId);
+            return sellBook(userPrompts);
 
-            SoldBook soldBook = new SoldBook(inStockBook);
-            soldBook.setSoldPrice(soldPrice);
-            soldBook.setStatus(BookStatuses.SOLD.getStatus());
-            bookMap.remove(soldBook.getBookId());
-
-            bookMap.put(soldBook.getBookId(), soldBook);
-
-            return helper.alterBookList(bookMap);
+        }
+        if (command.equals(Commands.BIN)) {
+            return binBook(userPrompts);
 
         }
         return false;
+    }
+
+    private boolean sellBook(List<UserPrompts> userPrompts) {
+        String soldPrice = "";
+        String bookId = "";
+        for (UserPrompts userPrompt : userPrompts) {
+            if (userPrompt.getField().equals(UserPromptFields.PRICE)) {
+                soldPrice = userPrompt.getValue();
+            } else if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+                bookId = userPrompt.getValue();
+            }
+        }
+        Book inStockBook = bookMap.get(bookId);
+
+        SoldBook soldBook = new SoldBook(inStockBook);
+        soldBook.setSoldPrice(soldPrice);
+        soldBook.setStatus(BookStatuses.SOLD.getStatus());
+        bookMap.remove(soldBook.getBookId());
+
+        bookMap.put(soldBook.getBookId(), soldBook);
+
+        return helper.alterBookList(bookMap);
+    }
+
+    private boolean binBook(List<UserPrompts> userPrompts) {
+        String faultDesc = "";
+        String bookId = "";
+        for (UserPrompts userPrompt : userPrompts) {
+            if (userPrompt.getField().equals(UserPromptFields.FAULT)) {
+                faultDesc = userPrompt.getValue();
+            } else if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+                bookId = userPrompt.getValue();
+            }
+        }
+        Book inStockBook = bookMap.get(bookId);
+
+        BinnedBook binnedBook = new BinnedBook(inStockBook);
+        binnedBook.setFaultDescription(faultDesc);
+        binnedBook.setStatus(BookStatuses.BINNED.getStatus());
+        bookMap.remove(binnedBook.getBookId());
+        bookMap.put(binnedBook.getBookId(), binnedBook);
+        return helper.alterBookList(bookMap);
+    }
+
+
+    private boolean addBook(List<UserPrompts> userPrompts) {
+        Book savedBook = new Book();
+        for (UserPrompts userPrompt : userPrompts) {
+            setStandardBookFields(savedBook, userPrompt);
+        }
+        return helper.saveNewBook(savedBook);
     }
 
     private void setStandardBookFields(Book savedBook, UserPrompts userPrompt) {

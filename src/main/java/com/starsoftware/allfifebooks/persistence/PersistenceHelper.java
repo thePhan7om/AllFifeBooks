@@ -1,6 +1,7 @@
 package com.starsoftware.allfifebooks.persistence;
 
 import com.starsoftware.allfifebooks.books.BookStatuses;
+import com.starsoftware.allfifebooks.books.bookTypes.BinnedBook;
 import com.starsoftware.allfifebooks.books.bookTypes.Book;
 import com.starsoftware.allfifebooks.books.bookTypes.SoldBook;
 import org.apache.log4j.Logger;
@@ -51,6 +52,13 @@ public class PersistenceHelper {
             if (book instanceof SoldBook) {
                 appendStandardBookDetails(output, book);
                 output.append(DELMITER_STRING + book.getSoldPrice());
+                output.append("\n");
+                continue;
+
+            }
+            if (book instanceof BinnedBook) {
+                appendStandardBookDetails(output, book);
+                output.append(DELMITER_STRING + book.getFaultDescription());
                 output.append("\n");
                 continue;
 
@@ -123,13 +131,22 @@ public class PersistenceHelper {
 
         } else if (bookEntryArray[3].trim().toUpperCase().equals(BookStatuses.SOLD.getStatus())) {
 
-            Book soldBook = new Book();
+            Book soldBook = new SoldBook();
             soldBook.setBookId(bookEntryArray[0].trim());
             soldBook.setAuthor(bookEntryArray[1].trim());
             soldBook.setTitle(bookEntryArray[2].trim());
             soldBook.setSoldPrice(bookEntryArray[3].trim());
             return soldBook;
 
+
+        } else if (bookEntryArray[3].trim().toUpperCase().equals(BookStatuses.BINNED.getStatus())) {
+
+            Book binnedBook = new BinnedBook();
+            binnedBook.setBookId(bookEntryArray[0].trim());
+            binnedBook.setAuthor(bookEntryArray[1].trim());
+            binnedBook.setTitle(bookEntryArray[2].trim());
+            binnedBook.setFaultDescription(bookEntryArray[3].trim());
+            return binnedBook;
 
         } else {
             log.debug("BookEntry3 " + bookEntryArray[3]);

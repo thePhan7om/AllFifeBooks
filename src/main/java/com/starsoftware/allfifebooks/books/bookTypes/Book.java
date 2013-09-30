@@ -13,6 +13,8 @@ public class Book {
     String title;
     String author;
     String status;
+    String soldPrice;
+    String faultDescription;
 
     public String getSoldPrice() {
         return soldPrice;
@@ -22,7 +24,13 @@ public class Book {
         this.soldPrice = soldPrice;
     }
 
-    String soldPrice;
+    public String getFaultDescription() {
+        return faultDescription;
+    }
+
+    public void setFaultDescription(String faultDescription) {
+        this.faultDescription = faultDescription;
+    }
 
     public String getBookId() {
         return bookId;

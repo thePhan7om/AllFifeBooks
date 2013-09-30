@@ -10,23 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 29/09/2013
- * Time: 19:49
- * To change this template use File | Settings | File Templates.
- */
+
 public class PersistenceHelper {
     private final static String DELMITER_STRING = "@@@--@@@";
     private static final Logger log = Logger.getLogger(PersistenceHelper.class);
     private final static String FILE_NAME = "inventory/allbooks.txt";
 
-    public boolean saveBook(Book savedBook) {
+    public boolean saveNewBook(Book savedBook) {
 
         try {
             Writer output = new BufferedWriter(new FileWriter(FILE_NAME, true));
-            output.append(savedBook.getBookId() + DELMITER_STRING + savedBook.getAuthor() + DELMITER_STRING + savedBook.getTitle() + DELMITER_STRING + savedBook.getStatus());
+            appendStandardBookDetails(output, savedBook);
             output.append("\n");
             output.close();
             return true;
@@ -38,13 +32,56 @@ public class PersistenceHelper {
         }
     }
 
-    public boolean alterBook(SoldBook soldBook) {
+    public boolean alterBookList(Map<String, Book> bookMap) {
+
+        try {
+            resetFile();
+            Writer output = new BufferedWriter(new FileWriter(FILE_NAME, true));
+
+            writeBookMapToFile(bookMap, output);
+        } catch (IOException e) {
+            log.error("File not found");
+        }
         return true;
+    }
+
+    private void writeBookMapToFile(Map<String, Book> bookMap, Writer output) throws IOException {
+        System.out.println("Book MAP size " + bookMap.size());
+        for (Book book : bookMap.values()) {
+            if (book instanceof SoldBook) {
+                appendStandardBookDetails(output, book);
+                output.append(DELMITER_STRING + book.getSoldPrice());
+                output.append("\n");
+                continue;
+
+            }
+            if (book instanceof Book) {
+                appendStandardBookDetails(output, book);
+                output.append("\n");
+
+            }
+
+
+        }
+        output.close();
+    }
+
+    private void appendStandardBookDetails(Writer output, Book book) throws IOException {
+        output.append(book.getBookId() + DELMITER_STRING + book.getAuthor() + DELMITER_STRING + book.getTitle() + DELMITER_STRING + book.getStatus());
+    }
+
+    private void resetFile() throws IOException {
+        File file = new File(FILE_NAME);
+        if (file.exists()) {
+            file.delete();
+        }
+        file = new File(FILE_NAME);
+        file.createNewFile();
     }
 
     public Map loadBookList() {
         Map<String, Book> bookMap = new HashMap<String, Book>();
-        java.io.File file = new java.io.File("inventory/allbooks.txt");
+        File file = new File(FILE_NAME);
         System.out.println(file.getAbsolutePath());
         Scanner input = null;
         try {

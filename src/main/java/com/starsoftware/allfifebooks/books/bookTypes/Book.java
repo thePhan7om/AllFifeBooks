@@ -14,6 +14,16 @@ public class Book {
     String author;
     String status;
 
+    public String getSoldPrice() {
+        return soldPrice;
+    }
+
+    public void setSoldPrice(String soldPrice) {
+        this.soldPrice = soldPrice;
+    }
+
+    String soldPrice;
+
     public String getBookId() {
         return bookId;
     }

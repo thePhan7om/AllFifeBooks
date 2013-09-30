@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class BookController {
     PersistenceHelper helper;
-    Map bookMap;
+    Map<String, Book> bookMap;
 
     public BookController() {
         helper = new PersistenceHelper();
@@ -31,26 +31,35 @@ public class BookController {
         return bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
 
-
     public boolean save(List<UserPrompts> userPrompts, Commands command) {
         if (command.equals(Commands.ADD)) {
             Book savedBook = new Book();
             for (UserPrompts userPrompt : userPrompts) {
                 setStandardBookFields(savedBook, userPrompt);
             }
-            return helper.saveBook(savedBook);
+            return helper.saveNewBook(savedBook);
 
         }
         if (command.equals(Commands.SELL)) {
-            SoldBook soldBook = new SoldBook();
+            String soldPrice = "";
+            String bookId = "";
             for (UserPrompts userPrompt : userPrompts) {
-                setStandardBookFields(soldBook, userPrompt);
                 if (userPrompt.getField().equals(UserPromptFields.PRICE)) {
-                    soldBook.setSoldPrice(userPrompt.getValue());
+                    soldPrice = userPrompt.getValue();
+                } else if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+                    bookId = userPrompt.getValue();
                 }
             }
+            Book inStockBook = bookMap.get(bookId);
+
+            SoldBook soldBook = new SoldBook(inStockBook);
+            soldBook.setSoldPrice(soldPrice);
             soldBook.setStatus(BookStatuses.SOLD.getStatus());
-            return helper.alterBook(soldBook);
+            bookMap.remove(soldBook.getBookId());
+
+            bookMap.put(soldBook.getBookId(), soldBook);
+
+            return helper.alterBookList(bookMap);
 
         }
         return false;

@@ -1,5 +1,7 @@
 package com.starsoftware.allfifebooks.books.bookTypes;
 
+import com.starsoftware.allfifebooks.books.BookStatuses;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Jordan
@@ -8,14 +10,27 @@ package com.starsoftware.allfifebooks.books.bookTypes;
  * To change this template use File | Settings | File Templates.
  */
 public class SoldBook extends Book {
-    private String soldPrice;
 
-    public String getSoldPrice() {
-        return soldPrice;
+    public SoldBook(Book inStockBook) {
+        this.setBookId(inStockBook.getBookId());
+        this.setAuthor(inStockBook.getAuthor());
+        this.setTitle(inStockBook.getTitle());
+
     }
 
+    @Override
+    public String getStatus() {
+        return BookStatuses.SOLD.getStatus();
+    }
+
+    @Override
+    public String getSoldPrice() {
+        return super.getSoldPrice();
+    }
+
+    @Override
     public void setSoldPrice(String soldPrice) {
-        this.soldPrice = soldPrice;
+        super.setSoldPrice(soldPrice);
     }
 
 }

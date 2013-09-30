@@ -8,6 +8,7 @@ import com.starsoftware.allfifebooks.persistence.PersistenceHelper;
 import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
 import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -145,4 +146,30 @@ public class BookController {
     }
 
 
+    public List<BookReportable> generateReport() {
+        int newBooks = 0;
+        int soldBooks = 0;
+        int binnedBooks = 0;
+        int refurbishedBooks = 0;
+        List<BookReportable> bookReport = new ArrayList<BookReportable>();
+
+        for (Book book : bookMap.values()) {
+            if (book.getStatus().equals(BookStatuses.NEW.getStatus())) {
+                newBooks++;
+            } else if (book.getStatus().equals(BookStatuses.SOLD.getStatus())) {
+                soldBooks++;
+            } else if (book.getStatus().equals(BookStatuses.BINNED.getStatus())) {
+                binnedBooks++;
+            } else if (book.getStatus().equals(BookStatuses.REFURBISHED.getStatus())) {
+                refurbishedBooks++;
+            }
+
+        }
+        bookReport.add(new BookReportable(BookStatuses.NEW.getStatus(), newBooks));
+        bookReport.add(new BookReportable(BookStatuses.REFURBISHED.getStatus(), refurbishedBooks));
+        bookReport.add(new BookReportable(BookStatuses.SOLD.getStatus(), soldBooks));
+        bookReport.add(new BookReportable(BookStatuses.BINNED.getStatus(), binnedBooks));
+
+        return bookReport;
+    }
 }

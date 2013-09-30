@@ -8,5 +8,5 @@ package com.starsoftware.allfifebooks.commands;
  * To change this template use File | Settings | File Templates.
  */
 public enum Commands {
-    ADD, SELL, BIN, REFUBISH;
+    ADD, SELL, BIN, REFUBISH, REPORT;
 }

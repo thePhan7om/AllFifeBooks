@@ -41,6 +41,10 @@ public class AllFifeBooks {
             System.out.println(" ### Refurbish Book ###");
             command = new RefurbishBookCommand();
 
+        } else if (optionSelection.trim().equals("5")) {
+            System.out.println(" ### View Report ###");
+            command = new BookReportCommand();
+
         } else {
             System.out.println("Sorry That option is not valid please try again: ");
             runApplication(questionAsker);

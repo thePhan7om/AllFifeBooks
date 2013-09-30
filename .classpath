@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: log4j:log4j:1.2.14"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: junit:junit:4.8.1"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.mockito:mockito-all:1.8.4"/>
+	<classpathentry kind="lib" path="target/lib/junit-4.8.1.jar"/>
+	<classpathentry kind="lib" path="target/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="target/lib/mockito-all-1.8.4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: junit:junit:4.8.1">
+    <archive path="/Users/Jordan/.m2/repository/junit/junit/4.8.1/junit-4.8.1.jar" />
+  </library>
+  <library name="Maven: org.mockito:mockito-all:1.8.4">
+    <archive path="/Users/Jordan/.m2/repository/org/mockito/mockito-all/1.8.4/mockito-all-1.8.4.jar" />
+  </library>
+  <library name="Maven: log4j:log4j:1.2.14">
+    <archive path="/Users/Jordan/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar" />
+  </library>
+</eclipse-userlibraries>
+

@@ -70,8 +70,6 @@ public class BookController {
         }
         Book refurbishedBook = new Book(bookMap.get(bookId));
         refurbishedBook.setStatus(BookStatuses.REFURBISHED.getStatus());
-        System.out.println("REFUBED BOOK STATUS " + refurbishedBook.getStatus());
-
         bookMap.remove(refurbishedBook.getBookId());
         bookMap.put(refurbishedBook.getBookId(), refurbishedBook);
         return helper.alterBookList(bookMap);

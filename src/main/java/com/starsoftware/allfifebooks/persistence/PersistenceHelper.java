@@ -121,6 +121,16 @@ public class PersistenceHelper {
             return newOrRefurbBook;
 
 
+        } else if (bookEntryArray[3].trim().toUpperCase().equals(BookStatuses.SOLD.getStatus())) {
+
+            Book soldBook = new Book();
+            soldBook.setBookId(bookEntryArray[0].trim());
+            soldBook.setAuthor(bookEntryArray[1].trim());
+            soldBook.setTitle(bookEntryArray[2].trim());
+            soldBook.setSoldPrice(bookEntryArray[3].trim());
+            return soldBook;
+
+
         } else {
             log.debug("BookEntry3 " + bookEntryArray[3]);
         }

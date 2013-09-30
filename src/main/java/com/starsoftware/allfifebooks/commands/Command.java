@@ -19,4 +19,6 @@ public interface Command {
     void save(List<UserPrompts> userPrompts);
 
     void displayBookListing();
+
+    Commands getCommand();
 }

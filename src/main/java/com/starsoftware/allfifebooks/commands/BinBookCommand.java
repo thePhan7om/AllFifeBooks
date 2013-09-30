@@ -13,15 +13,15 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  * User: Jordan
- * Date: 29/09/2013
- * Time: 22:03
+ * Date: 30/09/2013
+ * Time: 19:23
  * To change this template use File | Settings | File Templates.
  */
-public class SellBookCommand implements Command {
-
+public class BinBookCommand implements Command {
     private static final List<String> YES_NO = Arrays.asList("YES", "NO");
-    private final static String DELMITER_STRING = "@@@--@@@";
     BookController bookController;
+    private final static String DELMITER_STRING = "@@@--@@@";
+
 
     @Override
     public List<UserPrompts> executeCommand() {
@@ -32,9 +32,7 @@ public class SellBookCommand implements Command {
     @Override
     public boolean validatePrompt(UserPrompts userPrompt) {
         if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
-            if (bookController.validateID(userPrompt)) {
-                return bookController.isBookInStock(userPrompt);
-            }
+            return bookController.validateID(userPrompt);
         } else if (userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) {
             System.out.println("Entered field " + userPrompt.getValue().trim().toUpperCase());
             if (YES_NO.contains(userPrompt.getValue().toUpperCase())) {
@@ -46,9 +44,9 @@ public class SellBookCommand implements Command {
 
     @Override
     public void save(List<UserPrompts> userPrompts) {
-        boolean result = bookController.save(userPrompts, Commands.SELL);
+        boolean result = bookController.save(userPrompts, Commands.BIN);
         if (result) {
-            System.out.println("Book Sold");
+            System.out.println("Book Binned");
 
         }
     }
@@ -76,7 +74,7 @@ public class SellBookCommand implements Command {
         List<UserPrompts> userPrompts = new ArrayList<UserPrompts>();
         userPrompts.add(new UserPrompts("> Would you like to see a listing of all in stock books? Please enter 'YES' or 'NO' ", UserPromptFields.BOOK_LISTING, true));
         userPrompts.add(new UserPrompts("> Please Enter the Book ID", UserPromptFields.BOOK_ID, true));
-        userPrompts.add(new UserPrompts("> Please Enter the Sold Price ", UserPromptFields.PRICE, false));
+        userPrompts.add(new UserPrompts("> Please Enter the fault description ", UserPromptFields.FAULT, false));
 
         return userPrompts;
 
@@ -86,5 +84,4 @@ public class SellBookCommand implements Command {
     public Commands getCommand() {
         return Commands.SELL;
     }
-
 }

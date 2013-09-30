@@ -14,7 +14,8 @@ public enum UserPromptFields {
     TITLE,
     STATUS,
     BOOK_LISTING,
-    PRICE;
+    PRICE,
+    FAULT;
 
 
 }

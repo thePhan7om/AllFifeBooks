@@ -1,9 +1,7 @@
 package com.starsoftware.allfifebooks;
 
 
-import com.starsoftware.allfifebooks.commands.AddBookCommand;
-import com.starsoftware.allfifebooks.commands.Command;
-import com.starsoftware.allfifebooks.commands.SellBookCommand;
+import com.starsoftware.allfifebooks.commands.*;
 import com.starsoftware.allfifebooks.userPrompts.QuestionAsker;
 import com.starsoftware.allfifebooks.userPrompts.UserPromptFields;
 import com.starsoftware.allfifebooks.userPrompts.UserPrompts;
@@ -40,6 +38,12 @@ public class AllFifeBooks {
             List<UserPrompts> userPrompts = sellCommand.executeCommand();
             userPrompts = askUserPrompts(userPrompts, sellCommand, questionAsker);
             sellCommand.save(userPrompts);
+        } else if (optionSelection.trim().equals("3")) {
+            log.debug("Bin Book Selected");
+            Command binCommand = new BinBookCommand();
+            List<UserPrompts> userPrompts = binCommand.executeCommand();
+            userPrompts = askUserPrompts(userPrompts, binCommand, questionAsker);
+            binCommand.save(userPrompts);
         } else {
             log.debug("Not Implemented Yet");
         }
@@ -70,15 +74,20 @@ public class AllFifeBooks {
         }
         if (userPrompt.getRequiresValidation()) {
             boolean validResponse = selectedCommand.validatePrompt(userPrompt);
-            if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
-                System.out.println("Sorry That Book ID is already In use. Please try again");
-                askUserPrompt(selectedCommand, questionAsker, userPrompt);
-            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.STATUS))) {
-                System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
-                askUserPrompt(selectedCommand, questionAsker, userPrompt);
-            } else if ((!validResponse) && (userPrompt.getField().equals(UserPromptFields.BOOK_LISTING))) {
-                System.out.println("Sorry That is Invalid only 'YES' or 'NO' are excepted. Please try again");
-                askUserPrompt(selectedCommand, questionAsker, userPrompt);
+            if (!validResponse) {
+                if ((selectedCommand.getCommand().equals(Commands.ADD)) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
+                    System.out.println("Sorry That Book ID is already In use. Please try again");
+                    askUserPrompt(selectedCommand, questionAsker, userPrompt);
+                } else if ((selectedCommand.getCommand().equals(Commands.SELL)) && (userPrompt.getField().equals(UserPromptFields.BOOK_ID))) {
+                    System.out.println("Sorry That Book ID is invalid. Please try again");
+                    askUserPrompt(selectedCommand, questionAsker, userPrompt);
+                } else if ((userPrompt.getField().equals(UserPromptFields.STATUS))) {
+                    System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
+                    askUserPrompt(selectedCommand, questionAsker, userPrompt);
+                } else if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING))) {
+                    System.out.println("Sorry That is Invalid only 'YES' or 'NO' are excepted. Please try again");
+                    askUserPrompt(selectedCommand, questionAsker, userPrompt);
+                }
             }
         }
     }

@@ -31,6 +31,16 @@ public class BookController {
         return bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
 
+    public boolean isBookInStock(UserPrompts userPrompt) {
+        Book selectedBook = bookMap.get(userPrompt.getValue().toUpperCase());
+        System.out.println("SELECTED BOOK " + selectedBook.getStatus());
+        if ((selectedBook.getStatus().equals(BookStatuses.NEW.getStatus())) || (selectedBook.getStatus().equals(BookStatuses.REFURBISHED.getStatus()))) {
+            System.out.println("returning true");
+            return true;
+        }
+        return false;
+    }
+
     public boolean save(List<UserPrompts> userPrompts, Commands command) {
         if (command.equals(Commands.ADD)) {
             Book savedBook = new Book();

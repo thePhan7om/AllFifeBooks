@@ -52,6 +52,11 @@ public class AddBookCommand implements Command {
         //Not Used here
     }
 
+    @Override
+    public Commands getCommand() {
+        return Commands.ADD;
+    }
+
     private List<UserPrompts> createPrompts() {
         List<UserPrompts> userPrompts = new ArrayList<UserPrompts>();
         userPrompts.add(new UserPrompts("> Please Enter the Book ID", UserPromptFields.BOOK_ID, true));

@@ -39,9 +39,14 @@ public class AddBookCommand extends BaseCommand implements Command {
     public void save(List<UserPrompts> userPrompts) {
         boolean result = bookController.save(userPrompts, Commands.ADD);
         if (result) {
-            System.out.println("Book Added");
+            System.out.println(" >> Book Added");
 
         }
+    }
+
+    @Override
+    public void displayBookListing() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

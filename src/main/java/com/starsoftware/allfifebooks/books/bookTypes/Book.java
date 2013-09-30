@@ -16,6 +16,15 @@ public class Book {
     String soldPrice;
     String faultDescription;
 
+    public Book() {
+    }
+
+    public Book(Book book) {
+        this.setBookId(book.getBookId());
+        this.setAuthor(book.getAuthor());
+        this.setTitle(book.getTitle());
+    }
+
     public String getSoldPrice() {
         return soldPrice;
     }

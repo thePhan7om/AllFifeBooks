@@ -26,28 +26,30 @@ public class AllFifeBooks {
                 "\n Press 3 to bin a book \n Press 4 to refurbish a book" +
                 "\n Press 5 to view a book report");
         //  open up standard input
+        Command command = null;
         if (optionSelection.trim().equals("1")) {
             System.out.println(" ### Add Book ###");
-            Command addCommand = new AddBookCommand();
-            List<UserPrompts> userPrompts = addCommand.executeCommand();
-            userPrompts = askUserPrompts(userPrompts, addCommand, questionAsker);
-            addCommand.save(userPrompts);
+            command = new AddBookCommand();
+
         } else if (optionSelection.trim().equals("2")) {
             System.out.println(" ### Sell Book ###");
-            Command sellCommand = new SellBookCommand();
-            List<UserPrompts> userPrompts = sellCommand.executeCommand();
-            userPrompts = askUserPrompts(userPrompts, sellCommand, questionAsker);
-            sellCommand.save(userPrompts);
+            command = new SellBookCommand();
         } else if (optionSelection.trim().equals("3")) {
             System.out.println(" ### Bin Book ###");
-            Command binCommand = new BinBookCommand();
-            List<UserPrompts> userPrompts = binCommand.executeCommand();
-            userPrompts = askUserPrompts(userPrompts, binCommand, questionAsker);
-            binCommand.save(userPrompts);
+            command = new BinBookCommand();
+        } else if (optionSelection.trim().equals("4")) {
+            System.out.println(" ### Refurbish Book ###");
+            command = new RefurbishBookCommand();
+
         } else {
-            log.debug("Not Implemented Yet");
+            System.out.println("Sorry That option is not valid please try again: ");
+            runApplication(questionAsker);
         }
-        System.out.println("Selection" + optionSelection);
+        if (command != null) {
+            List<UserPrompts> userPrompts = command.executeCommand();
+            userPrompts = askUserPrompts(userPrompts, command, questionAsker);
+            command.save(userPrompts);
+        }
     }
 
     private List<UserPrompts> askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {

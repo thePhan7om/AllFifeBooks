@@ -27,10 +27,10 @@ public abstract class BaseCommand implements Command {
         bookController = new BookController();
     }
 
-    public boolean validatePrompt(UserPrompts userPrompt) {
+    public boolean validatePrompt(List<String> acceptedStatuses, UserPrompts userPrompt) {
         if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
             if (bookController.validateID(userPrompt)) {
-                return bookController.isBookInStock(userPrompt);
+                return bookController.isBookInCorrectState(acceptedStatuses, userPrompt);
             }
         } else if (userPrompt.getField().equals(UserPromptFields.BOOK_LISTING)) {
             if (YES_NO.contains(userPrompt.getValue().toUpperCase())) {
@@ -40,7 +40,7 @@ public abstract class BaseCommand implements Command {
         return false;
     }
 
-    public void displayBookListing() {
+    public void displayBookListing(List<String> acceptedStatuses) {
         Map<String, Book> bookList = bookController.getBookMap();
         String[] lines = new String[bookList.size() + 1];
         int i = 0;
@@ -52,7 +52,7 @@ public abstract class BaseCommand implements Command {
         }
         for (String line : lines) {
             String[] parts = line.split(DELMITER_STRING);
-            if (parts[3].equals("NEW") || parts[3].equals("REFURBISHED")) {
+            if (acceptedStatuses.contains(parts[3])) {
                 System.out.printf("%-10s %-15s %-20s   %s%n", parts[0], parts[3], parts[1], parts[2]);
             }
         }

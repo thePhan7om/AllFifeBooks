@@ -29,17 +29,15 @@ public class BookController {
     }
 
     public boolean validateID(UserPrompts userPrompt) {
+        if (userPrompt.getValue().length() != 9) {
+            return false;
+        }
         return bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
 
-    public boolean isBookInStock(UserPrompts userPrompt) {
+    public boolean isBookInCorrectState(List<String> acceptedStatuses, UserPrompts userPrompt) {
         Book selectedBook = bookMap.get(userPrompt.getValue().toUpperCase());
-        System.out.println("SELECTED BOOK " + selectedBook.getStatus());
-        if ((selectedBook.getStatus().equals(BookStatuses.NEW.getStatus())) || (selectedBook.getStatus().equals(BookStatuses.REFURBISHED.getStatus()))) {
-            System.out.println("returning true");
-            return true;
-        }
-        return false;
+        return acceptedStatuses.contains(selectedBook.getStatus());
     }
 
     public boolean save(List<UserPrompts> userPrompts, Commands command) {
@@ -55,7 +53,27 @@ public class BookController {
             return binBook(userPrompts);
 
         }
+        if (command.equals(Commands.REFUBISH)) {
+            return refurbishBook(userPrompts);
+
+        }
         return false;
+    }
+
+    private boolean refurbishBook(List<UserPrompts> userPrompts) {
+        String bookId = "";
+        for (UserPrompts userPrompt : userPrompts) {
+            if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
+                bookId = userPrompt.getValue();
+            }
+        }
+        Book refurbishedBook = new Book(bookMap.get(bookId));
+        refurbishedBook.setStatus(BookStatuses.REFURBISHED.getStatus());
+        System.out.println("REFUBED BOOK STATUS " + refurbishedBook.getStatus());
+
+        bookMap.remove(refurbishedBook.getBookId());
+        bookMap.put(refurbishedBook.getBookId(), refurbishedBook);
+        return helper.alterBookList(bookMap);
     }
 
     private boolean sellBook(List<UserPrompts> userPrompts) {
@@ -100,7 +118,6 @@ public class BookController {
         return helper.alterBookList(bookMap);
     }
 
-
     private boolean addBook(List<UserPrompts> userPrompts) {
         Book savedBook = new Book();
         for (UserPrompts userPrompt : userPrompts) {
@@ -126,4 +143,6 @@ public class BookController {
     public Map<String, Book> getBookMap() {
         return bookMap;  //To change body of created methods use File | Settings | File Templates.
     }
+
+
 }

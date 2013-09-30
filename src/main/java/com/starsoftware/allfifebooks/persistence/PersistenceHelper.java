@@ -47,7 +47,6 @@ public class PersistenceHelper {
     }
 
     private void writeBookMapToFile(Map<String, Book> bookMap, Writer output) throws IOException {
-        System.out.println("Book MAP size " + bookMap.size());
         for (Book book : bookMap.values()) {
             if (book instanceof SoldBook) {
                 appendStandardBookDetails(output, book);
@@ -90,7 +89,6 @@ public class PersistenceHelper {
     public Map loadBookList() {
         Map<String, Book> bookMap = new HashMap<String, Book>();
         File file = new File(FILE_NAME);
-        System.out.println(file.getAbsolutePath());
         Scanner input = null;
         try {
             input = new Scanner(file);
@@ -110,7 +108,6 @@ public class PersistenceHelper {
     }
 
     private Book populateBook(String bookEntry) {
-        log.debug("bookEntry " + bookEntry);
 
         String[] bookEntryArray = bookEntry.split(DELMITER_STRING);
 
@@ -149,7 +146,7 @@ public class PersistenceHelper {
             return binnedBook;
 
         } else {
-            log.debug("BookEntry3 " + bookEntryArray[3]);
+            System.out.println("Invalid Data");
         }
         return null;
     }

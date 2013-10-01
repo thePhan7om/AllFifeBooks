@@ -132,7 +132,8 @@ public class PersistenceHelper {
             soldBook.setBookId(bookEntryArray[0].trim());
             soldBook.setAuthor(bookEntryArray[1].trim());
             soldBook.setTitle(bookEntryArray[2].trim());
-            soldBook.setSoldPrice(bookEntryArray[3].trim());
+            soldBook.setStatus(bookEntryArray[3].trim());
+            soldBook.setSoldPrice(bookEntryArray[4].trim());
             return soldBook;
 
 
@@ -142,7 +143,8 @@ public class PersistenceHelper {
             binnedBook.setBookId(bookEntryArray[0].trim());
             binnedBook.setAuthor(bookEntryArray[1].trim());
             binnedBook.setTitle(bookEntryArray[2].trim());
-            binnedBook.setFaultDescription(bookEntryArray[3].trim());
+            binnedBook.setStatus(bookEntryArray[3].trim());
+            binnedBook.setFaultDescription(bookEntryArray[4].trim());
             return binnedBook;
 
         } else {

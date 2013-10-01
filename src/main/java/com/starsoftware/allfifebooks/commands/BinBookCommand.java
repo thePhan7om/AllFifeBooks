@@ -21,12 +21,13 @@ public class BinBookCommand extends BaseCommand implements Command {
     }
 
     @Override
-    public void save(List<UserPrompts> userPrompts) {
+    public String save(List<UserPrompts> userPrompts) {
         boolean result = bookController.save(userPrompts, Commands.BIN);
         if (result) {
-            System.out.println(" >> Book Binned");
+            return " >> Book Binned";
 
         }
+        return ">> Unable to bin book";
     }
 
     public void displayBookListing() {

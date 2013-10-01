@@ -9,13 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 30/09/2013
- * Time: 19:44
- * To change this template use File | Settings | File Templates.
- */
+
 public abstract class BaseCommand implements Command {
 
 

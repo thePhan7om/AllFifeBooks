@@ -25,8 +25,7 @@ public class TestSellBookCommand {
 
     @Test
     public void testCreatePrompts() {
-        AddBookCommand addCommand = new AddBookCommand();
-        List<UserPrompts> addPrompts = addCommand.executeCommand();
+        List<UserPrompts> addPrompts = sellBookCommand.executeCommand();
         Assert.assertEquals(3, addPrompts.size());
         Assert.assertEquals(UserPromptFields.BOOK_LISTING, addPrompts.get(0).getField());
         Assert.assertEquals(UserPromptFields.BOOK_ID, addPrompts.get(1).getField());

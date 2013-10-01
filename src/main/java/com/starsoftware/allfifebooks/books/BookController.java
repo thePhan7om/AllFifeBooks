@@ -12,13 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 29/09/2013
- * Time: 19:47
- * To change this template use File | Settings | File Templates.
- */
+
 public class BookController {
     PersistenceHelper helper;
     Map<String, Book> bookMap;
@@ -33,6 +27,7 @@ public class BookController {
         if (userPrompt.getValue().length() != 9) {
             return false;
         }
+
         return bookMap.containsKey(userPrompt.getValue().toUpperCase());
     }
 
@@ -85,7 +80,11 @@ public class BookController {
                 bookId = userPrompt.getValue();
             }
         }
-        Book inStockBook = bookMap.get(bookId);
+
+
+        Book inStockBook = bookMap.get(bookId.toUpperCase());
+        System.out.println(inStockBook.getBookId());
+
 
         SoldBook soldBook = new SoldBook(inStockBook);
         soldBook.setSoldPrice(soldPrice);
@@ -127,7 +126,7 @@ public class BookController {
 
     private void setStandardBookFields(Book savedBook, UserPrompts userPrompt) {
         if (userPrompt.getField().equals(UserPromptFields.BOOK_ID)) {
-            savedBook.setBookId(userPrompt.getValue());
+            savedBook.setBookId(userPrompt.getValue().toUpperCase());
         } else if (userPrompt.getField().equals(UserPromptFields.STATUS)) {
             savedBook.setStatus(userPrompt.getValue());
         } else if (userPrompt.getField().equals(UserPromptFields.AUTHOR)) {

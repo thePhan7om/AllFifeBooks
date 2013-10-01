@@ -7,15 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 28/09/2013
- * Time: 21:50
- * To change this template use File | Settings | File Templates.
- */
+
 public class AddBookCommand extends BaseCommand implements Command {
-    private static final List<String> ACCEPTED_STATUSES = Arrays.asList("NEW", "REFURB");
+    private static final List<String> ACCEPTED_STATUSES = Arrays.asList("NEW", "REFURBISHED");
 
     @Override
     public List<UserPrompts> executeCommand() {
@@ -36,12 +30,13 @@ public class AddBookCommand extends BaseCommand implements Command {
     }
 
     @Override
-    public void save(List<UserPrompts> userPrompts) {
+    public String save(List<UserPrompts> userPrompts) {
         boolean result = bookController.save(userPrompts, Commands.ADD);
         if (result) {
-            System.out.println(" >> Book Added");
+            return " >> Book Added";
 
         }
+        return ">> Unable to add book";
     }
 
     @Override
@@ -59,7 +54,7 @@ public class AddBookCommand extends BaseCommand implements Command {
         userPrompts.add(new UserPrompts("> Please Enter the Book ID", UserPromptFields.BOOK_ID, true));
         userPrompts.add(new UserPrompts("> Please Enter the Book Title", UserPromptFields.TITLE, false));
         userPrompts.add(new UserPrompts("> Please Enter the Authors Name", UserPromptFields.AUTHOR, false));
-        userPrompts.add(new UserPrompts("> Is the Book New Or Refurbished? Please enter 'NEW' or 'REFURB'", UserPromptFields.STATUS, true));
+        userPrompts.add(new UserPrompts("> Is the Book New Or Refurbished? Please enter 'NEW' or 'REFURBISHED'", UserPromptFields.STATUS, true));
         return userPrompts;
 
     }

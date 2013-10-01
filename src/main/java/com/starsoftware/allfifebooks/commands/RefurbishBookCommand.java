@@ -7,13 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 30/09/2013
- * Time: 20:10
- * To change this template use File | Settings | File Templates.
- */
+
 public class RefurbishBookCommand extends BaseCommand implements Command {
     private static final List<String> ACCEPTED_STATUSES = Arrays.asList("BINNED");
 
@@ -26,11 +20,14 @@ public class RefurbishBookCommand extends BaseCommand implements Command {
     }
 
     @Override
-    public void save(List<UserPrompts> userPrompts) {
+    public String save(List<UserPrompts> userPrompts) {
         boolean result = bookController.save(userPrompts, Commands.REFUBISH);
         if (result) {
-            System.out.println(" >> Book Refurbished");
+            return " >> Book Refurbished";
+
         }
+
+        return ">> Unable to refurbish book";
     }
 
     public void displayBookListing() {

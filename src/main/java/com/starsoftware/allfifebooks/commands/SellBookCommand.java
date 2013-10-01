@@ -20,11 +20,13 @@ public class SellBookCommand extends BaseCommand implements Command {
     }
 
     @Override
-    public void save(List<UserPrompts> userPrompts) {
+    public String save(List<UserPrompts> userPrompts) {
         boolean result = bookController.save(userPrompts, Commands.SELL);
         if (result) {
-            System.out.println(" >> Book Sold");
+            return " >> Book Sold";
+
         }
+        return ">> Unable to sell book";
     }
 
     public void displayBookListing() {

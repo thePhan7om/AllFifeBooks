@@ -20,7 +20,7 @@ public class AllFifeBooks {
 
     }
 
-    public void runApplication(QuestionAsker questionAsker) {
+    public String runApplication(QuestionAsker questionAsker) {
         System.out.println("Welcome to All Fife Books, Please select an option:");
         String optionSelection = questionAsker.ask(" Press 1 to add a new book \n Press 2 to sell a book" +
                 "\n Press 3 to bin a book \n Press 4 to refurbish a book" +
@@ -52,8 +52,9 @@ public class AllFifeBooks {
         if (command != null) {
             List<UserPrompts> userPrompts = command.executeCommand();
             userPrompts = askUserPrompts(userPrompts, command, questionAsker);
-            command.save(userPrompts);
+            return command.save(userPrompts);
         }
+        return "error";
     }
 
     private List<UserPrompts> askUserPrompts(List<UserPrompts> userPrompts, Command selectedCommand, QuestionAsker questionAsker) {
@@ -74,6 +75,7 @@ public class AllFifeBooks {
     }
 
     private void validateInput(Command selectedCommand, QuestionAsker questionAsker, UserPrompts userPrompt) {
+
         if (userPrompt.getValue().length() <= 1) {
             System.out.println("Sorry you must enter a value. Please try again");
             askUserPrompt(selectedCommand, questionAsker, userPrompt);
@@ -89,7 +91,7 @@ public class AllFifeBooks {
                     askUserPrompt(selectedCommand, questionAsker, userPrompt);
                 }
                 if ((userPrompt.getField().equals(UserPromptFields.STATUS))) {
-                    System.out.println("Sorry That is Invalid only 'NEW' or 'REFURB' are excepted. Please try again");
+                    System.out.println("Sorry That is Invalid only 'NEW' or 'REFURBISHED' are excepted. Please try again");
                     askUserPrompt(selectedCommand, questionAsker, userPrompt);
                 } else if ((userPrompt.getField().equals(UserPromptFields.BOOK_LISTING))) {
                     System.out.println("Sorry That is Invalid only 'YES' or 'NO' are excepted. Please try again");

@@ -8,13 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Jordan
- * Date: 30/09/2013
- * Time: 20:38
- * To change this template use File | Settings | File Templates.
- */
+
 public class BookReportCommand extends BaseCommand implements Command {
     private static final List<String> YES_NO = Arrays.asList("YES", "NO");
 
@@ -32,8 +26,8 @@ public class BookReportCommand extends BaseCommand implements Command {
     }
 
     @Override
-    public void save(List<UserPrompts> userPrompts) {
-
+    public String save(List<UserPrompts> userPrompts) {
+        return " >> Report Generated";
     }
 
     public void displayBookListing() {

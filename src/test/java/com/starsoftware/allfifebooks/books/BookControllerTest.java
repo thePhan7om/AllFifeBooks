@@ -101,7 +101,9 @@ public class BookControllerTest {
         bookController.bookMap = bookMap;
         bookId.setValue("NoT InSET");
         Assert.assertFalse(bookController.validateID(bookId));
+        System.out.println(newBook.getBookId());
         bookId.setValue(newBook.getBookId());
+        System.out.println("VALID ID" + bookController.validateID(bookId));
         Assert.assertTrue(bookController.validateID(bookId));
 
     }
@@ -182,7 +184,7 @@ public class BookControllerTest {
     public void testBinnedBook() {
         List<UserPrompts> userPrompts = new ArrayList<UserPrompts>();
         bookId.setValue(newBook2.getBookId());
-        soldPrice.setValue(binnedBook.getFaultDescription());
+        fault.setValue(binnedBook.getFaultDescription());
         userPrompts.add(bookId);
         userPrompts.add(fault);
 
@@ -216,22 +218,22 @@ public class BookControllerTest {
     private void setUpBooks() {
         newBook = new Book();
         newBook.setTitle("A Title");
-        newBook.setBookId("TEST1234");
+        newBook.setBookId("TEST12345");
         newBook.setAuthor("A Author");
         newBook.setStatus(BookStatuses.NEW.getStatus());
         newBook2 = new Book();
         newBook2.setTitle("An Other Title");
-        newBook2.setBookId("TEST2345");
+        newBook2.setBookId("TEST23456");
         newBook2.setAuthor("B Author");
         newBook2.setStatus(BookStatuses.NEW.getStatus());
         refurbedBook = new Book();
         refurbedBook.setTitle("An Refubished Title");
-        refurbedBook.setBookId("TEST3456");
+        refurbedBook.setBookId("TEST34567");
         refurbedBook.setAuthor("C Author");
         refurbedBook.setStatus(BookStatuses.REFURBISHED.getStatus());
         soldBook = new SoldBook();
         soldBook.setTitle("An Sole Title");
-        soldBook.setBookId("TEST4567");
+        soldBook.setBookId("TEST45678");
         soldBook.setAuthor("S Author");
         soldBook.setSoldPrice("£9.99");
         binnedBook = new BinnedBook();
